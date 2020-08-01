@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ -z $1 ]; then
+	echo "Usage: cml-publish image.png"
+	echo "Environment variables: repo_token, GITHUB_REPOSITORY"
+	return 1;
+fi
+
+filepath="$(git rev-parse --show-prefix)$1"
+echo "![]($filepath)"
