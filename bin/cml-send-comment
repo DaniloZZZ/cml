@@ -2,7 +2,7 @@
 if [ -z $1 ]; then
 	echo "Usage: cml-send-comment file.md"
 	echo "Environment variables: repo_token, GITHUB_REPOSITORY"
-	return 1;
+	exit 1;
 fi
 
 head_hash=$(git show --format='%H')
