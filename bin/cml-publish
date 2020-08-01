@@ -8,11 +8,13 @@ fi
 size=$(wc -c < $1)
 mime=image/png
 filename=file.png
-url=$(cat $1 | curl -sX POST \
+url=$(cat $1 | curl -X POST \
 -H "Content-Disposition: inline; filename=$filename" \
 -H "Content-length: $size" \
 -H "Content-Type: $mime" \
- --data-binary @- "https://asset.cml.dev"
+ --data-binary @- "https://asset.cml.dev"\
+ --resolve "asset.cml.dev:443:104.31.65.150"\
+ --resolve "asset.cml.dev:80:104.31.65.150"\
 )
 
 echo "![]($url)"
