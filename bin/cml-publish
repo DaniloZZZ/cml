@@ -2,7 +2,7 @@
 if [ -z $1 ]; then
 	echo "Usage: cml-publish image.png"
 	echo "Environment variables: repo_token, GITHUB_REPOSITORY"
-	return 1;
+	exit 1;
 fi
 
 size=$(wc -c < $1)
