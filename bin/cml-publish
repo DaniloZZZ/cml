@@ -5,5 +5,14 @@ if [ -z $1 ]; then
 	return 1;
 fi
 
-filepath="$(git rev-parse --show-prefix)$1"
-echo "![]($filepath)"
+size=$(wc -c < $1)
+mime=image/png
+filename=file.png
+url=$(cat $1 | curl -sX POST \
+-H "Content-Disposition: inline; filename=$filename" \
+-H "Content-length: $size" \
+-H "Content-Type: $mime" \
+ --data-binary @- "https://asset.cml.dev"
+)
+
+echo "![]($url)"

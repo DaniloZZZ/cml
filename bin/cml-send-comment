@@ -5,8 +5,11 @@ if [ -z $1 ]; then
 	return 1;
 fi
 
-head_hash=$(git show --format='%H')
+head_hash=$(git show -s --format='%H')
 echo Commit hash: $head_hash
 echo Repository: $GITHUB_REPOSITORY
-file=$(cat $1)
-curl -X POST -H "Authorization: token ${repo_token}" -d"{\"body\":\"$file\"}" https://api.github.com/$GITHUB_REPOSITORY/commits/$head_hash/comment
+file=$( cat $1 | sed -e 's/$/\\n/' | tr -d '\n' )
+echo "file: $file"
+json="{\"body\":\"$file\"}" 
+echo $json
+echo $json | curl -X POST -H "Authorization: token ${repo_token}" --data-binary @- https://api.github.com/repos/$GITHUB_REPOSITORY/commits/$head_hash/comments
